@@ -151,6 +151,11 @@ section{position:relative;overflow:hidden}
 .tl-img-wrap{border-radius:14px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 8px 32px rgba(0,0,0,.5)}
 .tl-img-wrap img,.tl-img-ph{width:100%;height:100%;object-fit:cover;display:block}
 .tl-img-ph{background:rgba(201,168,76,.07);display:flex;align-items:center;justify-content:center;font-size:2.5rem}
+/* Desktop: posisi kolom timeline */
+.tl-left{grid-column:1}
+.tl-right{grid-column:2}
+.tl-left.tl-text{text-align:right;padding-right:.5rem}
+.tl-right.tl-text{text-align:left;padding-left:.5rem}
 
 /* RSVP */
 #rsvp{background:var(--cream-dark)}
@@ -224,9 +229,10 @@ footer{background:var(--navy-deep);text-align:center;padding:3.5rem 1.5rem;borde
   .rsvp-wrap{grid-template-columns:1fr}
   .timeline::before{left:1.5rem}
   .tl-item{grid-template-columns:1fr;gap:1rem}
-  .tl-item .tl-text,.tl-item .tl-img{grid-column:1}
-  .tl-item .tl-text{order:2;text-align:left;padding:0}
-  .tl-item .tl-img{order:1}.tl-dot{left:1.5rem}
+  .tl-left,.tl-right{grid-column:1 !important}
+  .tl-img-col{order:1}
+  .tl-text{order:2;text-align:left !important;padding:0 0 0 2.5rem !important}
+  .tl-dot{left:1.5rem;position:absolute}
   .section-title{font-size:2.6rem}
   .cd-box{padding:1.1rem 1rem;min-width:70px}.cd-num{font-size:2.2rem}
 }
@@ -321,7 +327,7 @@ footer{background:var(--navy-deep);text-align:center;padding:3.5rem 1.5rem;borde
                 Hapus div.photo-ph di bawah, ganti dengan:
                 <img src="URL_FOTO_DHANISA" alt="Dhanisa Aprillia Putri">
               -->
-              <div class="photo-ph">🌸</div>
+              <div class=<img src="./assets/images/sasa.jpg" alt="Dhanisa Aprillia Putri">>🌸</div>
             </div>
           </div>
           <div class="mp-name">Dhanisa Aprillia Putri</div>
@@ -348,7 +354,7 @@ footer{background:var(--navy-deep);text-align:center;padding:3.5rem 1.5rem;borde
                 Hapus div.photo-ph di bawah, ganti dengan:
                 <img src="URL_FOTO_FAJAR" alt="Ahmad Fajar Ismail">
               -->
-              <div class="photo-ph">🌿</div>
+              <div class="./assets/images/sasa.jpg" alt="Dhanisa Aprillia Putri">>🌿</div>
             </div>
           </div>
           <div class="mp-name">Ahmad Fajar Ismail</div>
@@ -438,12 +444,12 @@ footer{background:var(--navy-deep);text-align:center;padding:3.5rem 1.5rem;borde
           Ganti <div class="gal-ph">📷</div> dengan <img src="URL_FOTO" alt="">
           di masing-masing .gal-item
         -->
-        <div class="gal-item" onclick="openLB(this)"><img src="./assets/images/latarbiru.jpg" alt="GANTENG"></div>
-        <div class="gal-item" onclick="openLB(this)"><div class="gal-ph">📷</div></div>
-        <div class="gal-item" onclick="openLB(this)"><div class="gal-ph">📷</div></div>
-        <div class="gal-item" onclick="openLB(this)"><div class="gal-ph">📷</div></div>
-        <div class="gal-item" onclick="openLB(this)"><div class="gal-ph">📷</div></div>
-        <div class="gal-item" onclick="openLB(this)"><div class="gal-ph">📷</div></div>
+        <div class="gal-item" onclick="openLB(this)"><img src="./assets/images/g1.jpg" alt="HARI INI"></div>
+        <div class="gal-item" onclick="openLB(this)"><img src="./assets/images/g2.jpg" alt="HARI INI"></div>
+        <div class="gal-item" onclick="openLB(this)"><img src="./assets/images/g3.jpg" alt="HARI INI"></div>
+        <div class="gal-item" onclick="openLB(this)"><img src="./assets/images/g4.jpg" alt="HARI INI"></div>
+        <div class="gal-item" onclick="openLB(this)"><img src="./assets/images/g5.jpg" alt="HARI INI"></div>
+        <div class="gal-item" onclick="openLB(this)"><img src="./assets/images/g6.jpg" alt="HARI INI"></div>
       </div>
     </div>
   </section>
@@ -460,27 +466,27 @@ footer{background:var(--navy-deep);text-align:center;padding:3.5rem 1.5rem;borde
       <div class="timeline">
         <!-- ITEM 1 -->
         <div class="tl-item reveal">
-          <div style="grid-column:1;text-align:right;padding-right:.5rem">
+          <div class="tl-left tl-text">
             <div class="tl-year">2016</div>
             <div class="tl-event">Awal Pertemuan</div>
             <p class="tl-desc">[Ceritakan di sini bagaimana Ahmad Fajar dan Dhanisa pertama kali bertemu. Tempat, suasana, dan kesan pertama yang tak terlupakan.]</p>
           </div>
           <div class="tl-dot"></div>
-          <div style="grid-column:2">
+          <div class="tl-right tl-img-col">
             <div class="tl-img-wrap">
-              <img src="./assets/images/sma.jpeg" alt="Awal Pertemuan" />
+              <img src="C:\Users\USER\Desktop\undangan-pernikahan-jawa\assets\Image\sma.jpeg" alt="Awal Pertemuan" />
             </div>
           </div>
         </div>
         <!-- ITEM 2 -->
         <div class="tl-item reveal">
-          <div style="grid-column:1">
+          <div class="tl-left tl-img-col">
             <div class="tl-img-wrap">
-              <img src="./assets/images/lamaran.jpg" alt="Lamaran" />
+              <img src="C:\Users\USER\Desktop\undangan-pernikahan-jawa\assets\Image\lamaran.JPG" alt="Lamaran" />
             </div>
           </div>
           <div class="tl-dot"></div>
-          <div style="grid-column:2;text-align:left;padding-left:.5rem">
+          <div class="tl-right tl-text">
             <div class="tl-year">2025</div>
             <div class="tl-event">Lamaran</div>
             <p class="tl-desc">[Ceritakan momen lamaran yang penuh makna dan haru. Bagaimana suasana dan mengapa momen itu begitu spesial bagi kalian berdua.]</p>
@@ -488,15 +494,15 @@ footer{background:var(--navy-deep);text-align:center;padding:3.5rem 1.5rem;borde
         </div>
         <!-- ITEM 3 -->
         <div class="tl-item reveal">
-          <div style="grid-column:1;text-align:right;padding-right:.5rem">
+          <div class="tl-left tl-text">
             <div class="tl-year">2026</div>
             <div class="tl-event">Hari Yang Dinantikan</div>
             <p class="tl-desc">[Ceritakan perjalanan menuju hari pernikahan. Harapan, doa, dan rasa syukur yang menyelimuti kalian berdua menyambut hari bahagia ini.]</p>
           </div>
           <div class="tl-dot"></div>
-          <div style="grid-column:2">
+          <div class="tl-right tl-img-col">
             <div class="tl-img-wrap">
-              <img src="./assets/images/latarbiru.jpg" alt="Hari Yang Dinantikan" />
+              <img src="C:\Users\USER\Desktop\undangan-pernikahan-jawa\assets\Image\latarbiru.jpg" alt="Hari Yang Dinantikan" />
             </div>
           </div>
         </div>
@@ -537,7 +543,7 @@ footer{background:var(--navy-deep);text-align:center;padding:3.5rem 1.5rem;borde
               </label>
             </div>
           </div>
-          <button class="btn-submit" onclick="submitRSVP()">Kirim Ucapan &amp; RSVP ✉️</button>  
+          <button class="btn-submit" onclick="submitRSVP()">Kirim Ucapan &amp; RSVP ✉️</button>
         </div>
         <div class="rsvp-msg-box reveal">
           <h3>Ucapan Tamu</h3>
