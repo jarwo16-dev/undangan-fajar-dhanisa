@@ -670,7 +670,16 @@ function observeReveal(){
   document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
 }
 
-/* RSVP */
+/* ============================================================
+   RSVP — Telegram Bot Backend
+   Ganti 2 nilai di bawah ini dengan milik Anda:
+   1. BOT_TOKEN  → dari @BotFather di Telegram
+   2. CHAT_ID    → ID chat/grup Anda (pakai @userinfobot untuk tahu)
+   ============================================================ */
+var TG_BOT_TOKEN = '8617843481:AAF2tyatVn6flnqriCEe0X8gwiYlAHo1iWM';   // contoh: '7123456789:AAHxxx...'
+var TG_CHAT_ID   = '6515663422';     // contoh: '123456789'
+
+/* Data lokal (hanya tampil di browser pengirim sebagai preview) */
 var rsvpData=[];
 try{rsvpData=JSON.parse(localStorage.getItem('rsvp_fajar_dhanisa')||'[]');}catch(e){}
 
@@ -688,16 +697,73 @@ function renderMsgs(){
 }
 
 function submitRSVP(){
-  var name=document.getElementById('rsvp-name').value.trim();
-  var msg=document.getElementById('rsvp-msg').value.trim();
-  var st=document.querySelector('input[name="hadir"]:checked').value;
+  var name = document.getElementById('rsvp-name').value.trim();
+  var msg  = document.getElementById('rsvp-msg').value.trim();
+  var st   = document.querySelector('input[name="hadir"]:checked');
+  if(!st){alert('Mohon pilih konfirmasi kehadiran.');return;}
+  var status = st.value;
   if(!name){alert('Mohon isi nama Anda terlebih dahulu.');return;}
-  rsvpData.push({n:name,m:msg,s:st,t:Date.now()});
-  try{localStorage.setItem('rsvp_fajar_dhanisa',JSON.stringify(rsvpData));}catch(e){}
-  document.getElementById('rsvp-name').value='';
-  document.getElementById('rsvp-msg').value='';
-  renderMsgs();
-  alert('Terima kasih atas ucapan dan konfirmasi Anda! 🌸');
+
+  /* Nonaktifkan tombol saat proses kirim */
+  var btn = document.querySelector('.btn-submit');
+  btn.disabled = true;
+  btn.textContent = 'Mengirim... ⏳';
+
+  var statusLabel = status === 'hadir' ? '✅ Insya Allah Hadir' : '🙏 Berhalangan';
+  var text =
+    '🌸 *RSVP Undangan Pernikahan*\n' +
+    '👤 Nama : ' + name + '\n' +
+    '📋 Status : ' + statusLabel + '\n' +
+    '💬 Ucapan : ' + (msg || '–') + '\n' +
+    '🕐 Waktu : ' + new Date().toLocaleString('id-ID');
+
+  /* Kirim ke Telegram */
+  fetch('https://api.telegram.org/bot' + TG_BOT_TOKEN + '/sendMessage', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      chat_id: TG_CHAT_ID,
+      text: text,
+      parse_mode: 'Markdown'
+    })
+  })
+  .then(function(res){ return res.json(); })
+  .then(function(data){
+    if(data.ok){
+      /* Simpan lokal untuk tampil di halaman browser pengirim */
+      rsvpData.push({n:name, m:msg, s:status, t:Date.now()});
+      try{localStorage.setItem('rsvp_fajar_dhanisa', JSON.stringify(rsvpData));}catch(e){}
+      document.getElementById('rsvp-name').value='';
+      document.getElementById('rsvp-msg').value='';
+      renderMsgs();
+      btn.disabled = false;
+      btn.textContent = 'Kirim Ucapan & RSVP ✉️';
+      /* Notif sukses tampil di halaman (tidak pakai alert) */
+      showNotif('Terima kasih! Ucapan Anda telah terkirim 🌸');
+    } else {
+      throw new Error(data.description || 'Gagal kirim');
+    }
+  })
+  .catch(function(err){
+    btn.disabled = false;
+    btn.textContent = 'Kirim Ucapan & RSVP ✉️';
+    alert('Gagal mengirim. Pastikan koneksi internet aktif dan konfigurasi Bot Token serta Chat ID sudah benar.\n\nError: ' + err.message);
+    console.error('RSVP Telegram error:', err);
+  });
+}
+
+/* Notifikasi sukses inline (tanpa alert) */
+function showNotif(pesan){
+  var el = document.getElementById('rsvp-notif');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'rsvp-notif';
+    el.style.cssText = 'background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:10px;padding:.85rem 1.2rem;margin-top:1rem;font-family:var(--font-sans);font-size:.85rem;text-align:center;display:none;';
+    document.querySelector('.btn-submit').insertAdjacentElement('afterend', el);
+  }
+  el.textContent = pesan;
+  el.style.display = 'block';
+  setTimeout(function(){ el.style.display = 'none'; }, 5000);
 }
 
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
